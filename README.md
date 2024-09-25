@@ -1,15 +1,17 @@
 # Circle Connect
 
-A Social Media Platform
+<h3 align="center">A Social Media Application</h3>
+
 ![SnapShot](/public/assets/snapshots/Capture.PNG)
+
 ![SnapShot2](/public/assets/snapshots/Capture1.PNG)
 
 
-## Taable of Contents: 
+## Table of Contents: 
 - [Introduction](#Introduction)
 - [Built With](#Built-With)
 - [Features](#Features)
-- [ToDO](#ToDo)
+- [ToDo](#ToDo)
 ## Introduction:
 
 Circle Connect is a social media with this user-friendly platform that has a nice look and lots of features. Easily create and explore posts, and enjoy a strong authentication system and quick data fetching using React Query for a smooth user experience.
