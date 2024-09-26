@@ -59,6 +59,13 @@ Follow these steps to set up the project locally on your machine.
 - [Node.js](https://nodejs.org/en)
 - [npm (Node Package Manager)](https://www.npmjs.com/)
 
+#### Cloning the Repository
+
+```
+git clone https://github.com/puneet25j/CircleConnect.git
+cd CircleConnect
+```
+
 #### Installation
 Install the project dependencies using npm:
 ```
@@ -67,7 +74,6 @@ npm install
 
 #### Set Up Environment Variables
 Create a new file named .env in the root of your project and add the following content:
-
 
 ```
 VITE_APPWRITE_URL=
