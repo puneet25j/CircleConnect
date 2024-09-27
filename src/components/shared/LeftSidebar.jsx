@@ -3,14 +3,23 @@ import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
 
 import { sidebarLinks } from '@/constants';
 import { Button } from '../ui/button';
+import Loader from './Loader';
 import { useSignOutAccount } from '@/utilities/react-query/queries';
-import { useUserContext } from '@/context/AuthContext';
+import { INITIAL_USER, useUserContext } from '@/context/AuthContext';
 
 const LeftSidebar = () => {
   const navigate = useNavigate();
   const { mutate: signOut, isSuccess } = useSignOutAccount();
   const { pathname } = useLocation();
-  const { user } = useUserContext();
+  const { user, isLoading} = useUserContext();
+
+  // const handleSignOut = async (e)=>{
+  //   e.preventDefault()
+  //   signOut()
+  //   setIsAuthenticated(false)
+  //   setUser(INITIAL_USER)
+  //   navigate("sign-user")
+  // }
 
   useEffect(() => {
     if (isSuccess) navigate(0);
@@ -20,7 +29,6 @@ const LeftSidebar = () => {
     <nav className="leftsidebar">
       <div className="flex flex-col gap-11">
         <Link to="/" className="flex gap-3 items-center">
-        
           <img
             src="/assets/images/logo.svg"
             alt="logo"
@@ -28,17 +36,23 @@ const LeftSidebar = () => {
             height={36}
           />
         </Link>
-        <Link to={`/profile/${user.id}`} className="flex items-center gap-3">
-          <img
-            src={user.imageURL || '/assets/images/profile-placeholder.svg'}
-            alt="profile"
-            className="h-14 w-14 rounded-full"
-          />
-          <div className="flex flex-col">
-            <p className="body-bold">{user.name}</p>
-            <p className="small-regular text-light-3">@{user.username}</p>
+        {isLoading || !user.email ? (
+          <div className="h-14">
+            <Loader />
           </div>
-        </Link>
+        ) : (
+          <Link to={`/profile/${user.id}`} className="flex items-center gap-3">
+            <img
+              src={user.imageURL || '/assets/icons/profile-placeholder.svg'}
+              alt="profile"
+              className="h-14 w-14 rounded-full"
+            />
+            <div className="flex flex-col">
+              <p className="body-bold">{user.name}</p>
+              <p className="small-regular text-light-3">@{user.username}</p>
+            </div>
+          </Link>
+        )}
 
         <ul className="flex flex-col gap-6">
           {sidebarLinks.map((link) => {
@@ -72,7 +86,7 @@ const LeftSidebar = () => {
       <Button
         variant="ghost"
         className="shad-button_ghost"
-        onClick={() => signOut()}
+        onClick={()=>signOut()}
       >
         <img src="/assets/icons/logout.svg" alt="logout" />
         <p className="small-medium lg:base-medium">Logout</p>

@@ -3,8 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import { useUserContext } from '@/context/AuthContext';
 import { useGetPostById } from '@/utilities/react-query/queries';
 import { multiFormatDateString } from '@/utilities/utils';
-import Loader from '@/components/shared/Loader';
-import PostStats from '@/components/shared/PostStats';
+import { Loader, PostStats } from '@/components/shared';
 import { Button } from '@/components/ui/button';
 
 const PostDetails = () => {

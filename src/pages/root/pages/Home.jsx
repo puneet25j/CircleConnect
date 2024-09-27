@@ -1,5 +1,4 @@
-import Loader from '@/components/shared/Loader';
-import PostCard from '@/components/shared/PostCard';
+import { Loader, PostCard } from '@/components/shared';
 import { useGetRecentPost } from '@/utilities/react-query/queries';
 
 const Home = () => {

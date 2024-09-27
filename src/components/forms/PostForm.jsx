@@ -8,7 +8,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@
 import { Textarea } from '@/components/ui/textarea';
 import { Input } from '@/components/ui/input';
 
-import FileUploader from '../shared/FileUploader';
+import { FileUploader } from '../shared';
 import { useUserContext } from '@/context/AuthContext';
 import { PostValidation } from '@/utilities/validation';
 import { useCreatePost, useDeletePost, useUpdatePost } from '@/utilities/react-query/queries';

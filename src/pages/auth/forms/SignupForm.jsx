@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 //components
-import Loader from '@/components/shared/Loader';
+import { Loader } from '@/components/shared';
 //shadcn-ui
 import {
   Form,
