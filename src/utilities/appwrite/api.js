@@ -274,7 +274,7 @@ export async function deleteFile(fileId){
 }
 
 // ------------------------------
-// LIKE 
+// POST RELATED FUNCTION
 // ------------------------------
 
 // -------------- LIKE/DISLIKE POST------------------ 
@@ -364,6 +364,8 @@ export async function getPostById(postId){
       appwriteConfig.postCollectionId,
       postId
     )
+
+    if (!post) throw Error;
 
     return post
   } catch (error) {

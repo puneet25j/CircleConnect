@@ -26,6 +26,9 @@ const SigninForm = () => {
   const navigate = useNavigate();
   const { checkAuthUser, isLoading: isUserLoading } = useUserContext();
 
+  // Queries
+  const { mutateAsync: signInAccount, isPending } = useSignInAccount();
+
   //Define your form.
   const form = useForm({
     resolver: zodResolver(SigninValidation),
@@ -35,19 +38,18 @@ const SigninForm = () => {
     },
   });
 
-  // Queries
-  const { mutateAsync: signInAccount } =  useSignInAccount();
-
   //Define submit handler
   async function signinHandler(values) {
-    
     const session = await signInAccount({
       email: values.email,
       password: values.password,
     });
 
     if (!session) {
-      return toast({ title: `Sign in failed session. Please try again`, variant: 'destructive'});
+      return toast({
+        title: `Sign in failed session. Please try again`,
+        variant: 'destructive',
+      });
     }
 
     const isLoggedIn = await checkAuthUser();
@@ -66,7 +68,6 @@ const SigninForm = () => {
   return (
     <Form {...form}>
       <div className="sm:w-420 flex-center flex-col">
-
         <img src="/assets/images/logo.svg" alt="logo" />{' '}
         <h2 className="h3-bold md:h2-bold pt-5 sm:pt-12">
           Log in to your account
@@ -105,7 +106,7 @@ const SigninForm = () => {
             )}
           />
           <Button type="submit" className="shad-button_primary">
-            {isUserLoading ? (
+            {isPending || isUserLoading ? (
               <div className="flex-center gap-2">
                 <Loader /> Loading...
               </div>
