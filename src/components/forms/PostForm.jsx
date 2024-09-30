@@ -16,11 +16,10 @@ import { useCreatePost, useDeletePost, useUpdatePost } from '@/utilities/react-q
 const PostForm = ({ post, action }) => {
   const { toast } = useToast()
   const navigate = useNavigate()
+  const { user } = useUserContext();
+
   const { mutateAsync: createPost, isPending: isLoadingCreate } = useCreatePost();
   const { mutateAsync: updatePost, isPending: isLoadingUpdate } = useUpdatePost();
-  const { mutateAsync: deletePost, isPending: isLoadingDelete } = useDeletePost();
-
-  const {user} = useUserContext()
 
   //Define your form.
   const form = useForm({
@@ -34,39 +33,46 @@ const PostForm = ({ post, action }) => {
   });
 
   //Define a submit handler.
-  async function onSubmit(values) {
-    if(post && action === 'Update'){
+  async function submitHandler(values) {
+    // ACTION = UPDATE
+    if (post && action === 'Update') {
       const updatedPost = await updatePost({
         ...values,
         postId: post.$id,
         imageId: post?.imageId,
-        imageURL: post?.imageURL
-      })
+        imageURL: post?.imageURL,
+      });
 
-      if(!updatedPost){
-        return toast({title: 'Please try again'})
+      if (!updatedPost) {
+        return toast({
+          title: `${action} post failed. Please try again.`,
+          variant: 'desctructive',
+        });
       }
 
-      return navigate(`/post/${post.$id}`)
+      return navigate(`/post/${post.$id}`);
     }
 
-
+    // ACTION = CREATE
     const newPost = await createPost({
-      ...values, 
-      userId: user.id
-    })
+      ...values,
+      userId: user.id,
+    });
 
-    if(!newPost){
-      toast({title: 'Please try again'})
+    if (!newPost) {
+      toast({
+        title: `${action} post failed. Please try again.`,
+        variant: 'desctructive',
+      });
     }
 
-    navigate('/')
+    navigate('/');
   }
 
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(onSubmit)}
+        onSubmit={form.handleSubmit(submitHandler)}
         className="flex flex-col gap-9 w-full max-w-5xl"
       >
         <FormField
