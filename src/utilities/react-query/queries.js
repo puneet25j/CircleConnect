@@ -14,6 +14,7 @@ import {
   getInfinitePosts,
   getPostById,
   getRecentPosts,
+  getUsers,
   likePost,
   savePost,
   searchPosts,
@@ -46,7 +47,7 @@ export const useSignOutAccount = () => {
 };
 
 // ------------------------------
-// POSTS
+// POSTS CRUD
 // ------------------------------
 
 export const useCreatePost = () => {
@@ -84,6 +85,11 @@ export const useDeletePost = () => {
     },
   });
 };
+
+// ------------------------------
+// POSTS REALTED FUNCTION
+// ------------------------------
+
 
 export const useLikePost = () => {
   const queryClient = useQueryClient();
@@ -145,6 +151,10 @@ export const useDeleteSavedPost = () => {
   });
 };
 
+// ------------------------------
+// GET POSTS
+// ------------------------------
+
 export const useGetPosts = () => {
   return useInfiniteQuery({
     queryKey: [QUERY_KEYS.GET_INFINITE_POSTS],
@@ -182,9 +192,20 @@ export const useSearchPosts = (searchTerm)=>{
   })
 }
 
+// ------------------------------
+// USERS
+// ------------------------------
+
 export const useGetCurrentUser = () => {
   return useQuery({
     queryKey: [QUERY_KEYS.GET_CURRENT_USER],
     queryFn: getCurrentUser,
   });
 };
+
+export const useGetUsers = (limit) => {
+  return useQuery({
+    queryKey: [QUERY_KEYS.GET_USERS],
+    queryFn: () => getUsers(limit)
+  })
+}
