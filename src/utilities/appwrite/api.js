@@ -208,7 +208,7 @@ export async function updatePost(post) {
 
 // -------------- DELETE POST ------------------ 
 export async function deletePost(postId, imageId) {
-  if(!postId || !imageId) throw Error;
+  if(!postId || !imageId) return;
 
   try {
     const statusCode = await databases.deleteDocument(
@@ -414,6 +414,23 @@ export async function searchPosts(searchTerm) {
   }
 }
 
+export async function getUserPosts(userId){
+  if(!userId) return;
+
+  try {
+    const post = await databases.listDocuments(
+      appwriteConfig.databaseId,
+      appwriteConfig.postCollectionId,
+      [Query.equal('creator', userId), Query.orderDesc('$createdAt')]
+    );
+
+    if (!post) throw Error;
+
+    return post;
+  } catch (error) {
+    console.log(error)
+  }
+}
 
 // ------------------------------
 // USERS

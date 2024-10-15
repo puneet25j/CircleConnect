@@ -4,10 +4,6 @@ import { useGetCurrentUser } from '@/utilities/react-query/queries';
 const Saved = () => {
   const { data: currentUser } = useGetCurrentUser();
 
-  if(currentUser){
-    console.log(currentUser)
-  }
-
   const savePosts = currentUser?.save
     .map((savePost) => ({
       ...savePost.post,
