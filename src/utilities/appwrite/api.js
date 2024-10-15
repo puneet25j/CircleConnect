@@ -1,6 +1,5 @@
 import { ID, Query } from 'appwrite';
 import { appwriteConfig, account, avatars, storage, databases } from './config';
-import { useMutation } from '@tanstack/react-query';
 
 // ------------------------------
 // AUTH
