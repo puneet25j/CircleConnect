@@ -43,6 +43,19 @@ export const PostValidation = z.object({
   tags: z.string(),
 });
 
+export const ProfileValidation = z.object({
+  file: z.array(
+    z.custom((val) => val instanceof File),
+    { message: 'Must be of file structure' }
+  ),
+  name: z.string().min(2, { message: 'Name must be at least 2 characters' }),
+  username: z
+    .string()
+    .min(2, { message: 'Name must be at least 2 characters' }),
+  email: z.string().email(),
+  bio: z.string(),
+});
+
 // // Function to test the validation
 // const testPostValidation = (postData) => {
 //   const result = PostValidation.safeParse(postData);
