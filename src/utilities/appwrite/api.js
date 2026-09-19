@@ -105,7 +105,7 @@ export async function createPost(post) {
     if (!uploadedFile) throw Error;
 
     //Get file Url
-    const fileURL = getFilePreview(uploadedFile.$id);
+    const fileURL = getFileView(uploadedFile.$id);
 
     if (!fileURL) {
       await deleteFile(uploadedFile.$id);
@@ -127,6 +127,7 @@ export async function createPost(post) {
         imageId: uploadedFile.$id,
         location: post.location,
         tags: tags,
+        likes: [],
       }
     );
 
@@ -157,7 +158,7 @@ export async function updatePost(post) {
       if (!uploadedFile) throw Error;
 
       //Get file Url
-      const fileURL = getFilePreview(uploadedFile.$id);
+      const fileURL = getFileView(uploadedFile.$id);
       if (!fileURL) {
         await deleteFile(uploadedFile.$id);
         throw Error;
@@ -243,20 +244,17 @@ export async function uploadFile(file) {
 }
 
 // -------------- GET MEDIA URL------------------ 
-export function getFilePreview(fileId){
+export function getFileView(fileId){
   try {
-    const fileURL = storage.getFilePreview(
-      appwriteConfig.storageId,
-      fileId,
-      2000,
-      2000,
-      'top',
-      100
-    );
+    const rawFileURL = storage.getFileView(appwriteConfig.storageId, fileId);
 
-    if (!fileURL) throw Error;
+    if (!rawFileURL) throw Error;
 
-    return fileURL;
+    console.log(rawFileURL)
+
+    const transformedURL = `https://wsrv.nl/?url=${encodeURIComponent(rawFileURL)}&w=1200&h=1200&fit=cover&a=top&output=webp&q=85`;
+
+    return transformedURL;
   } catch (error) {
     console.log(error)
   }
@@ -490,7 +488,7 @@ export async function updateUser(user){
       if (!uploadedFile) throw Error;
 
       // Get new file url
-      const fileUrl = getFilePreview(uploadedFile.$id);
+      const fileUrl = getFileView(uploadedFile.$id);
       if (!fileUrl) {
         await deleteFile(uploadedFile.$id);
         throw Error;

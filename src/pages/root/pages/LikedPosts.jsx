@@ -17,7 +17,7 @@ const LikedPosts = () => {
         <p className="text-light-4">No liked posts</p>
       )}
 
-      <GridPostList posts={currentUser.liked} showStats={false} />
+      <GridPostList posts={currentUser.liked} showStats={false}/>
     </>
   );
 }

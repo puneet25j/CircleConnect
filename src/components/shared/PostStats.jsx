@@ -9,7 +9,7 @@ import { checkIsLiked } from '@/utilities/utils';
 import Loader from '@/components/shared/Loader';
 
 const PostStats = ({ post, userId }) => {
-  const likesList = post?.likes.map((user) => user.$id);
+  const likesList = (post?.likes || []).map((user) => user.$id);
 
   const [likes, setLikes] = useState(likesList);
   const [isSaved, setIsSaved] = useState(false);
@@ -20,8 +20,8 @@ const PostStats = ({ post, userId }) => {
 
   const { data: currentUser } = useGetCurrentUser();
 
-  const savedPostRecord = currentUser?.save.find(
-    (record) => record.post.$id === post?.$id
+  const savedPostRecord = (currentUser?.save || []).find(
+    (record) => record.post.$id === post?.$id,
   );
 
   useEffect(() => {
